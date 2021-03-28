@@ -1,0 +1,9 @@
+{
+  "name": "clasp-github-actions-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/google-apps-script": "1.0.30"
+  }
+}
