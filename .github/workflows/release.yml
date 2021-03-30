@@ -59,14 +59,14 @@ jobs:
           EOS
           ) > ~/.clasprc.json
 
-      - name: Create .clasp.json
+      - name: Create ~/.clasp.json
         run: |
           echo $(cat <<-EOS
           {
             "scriptId": "${CLASP_SCRIPT_ID}"
           }
           EOS
-          ) > .clasp.json
+          ) > ~/.clasp.json
 
       - name: Get version
         id: get_version
