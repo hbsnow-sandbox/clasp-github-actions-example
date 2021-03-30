@@ -1,0 +1,47 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: "14"
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Setup secrets
+        env:
+          CLASPRC: ${{ secrets.CLASPRC }}
+          CLASP: ${{ secrets.CLASP }}
+        run: |
+          echo ${CLASPRC_JSON} > ~/.clasprc.json
+          echo ${CLASP_JSON} > ./.clasp.json
+
+      - name: Get version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - name: Upload files
+        run: npx @google/clasp push --force
+
+      - name: Add version
+        run: npx @google/clasp version ${{ steps.get_version.outputs.VERSION }}
