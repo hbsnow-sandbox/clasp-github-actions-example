@@ -48,8 +48,8 @@ jobs:
             \"isLocalCreds\": false
           }
           EOS
-          )
-          echo \{ \"scriptId\": \"${CLASP_SCRIPT_ID}\" \}
+          ) > ~/.clasprc.json
+          echo \{ \"scriptId\": \"${CLASP_SCRIPT_ID}\" \} > ./.clasp.json
 
       - name: Get version
         id: get_version
