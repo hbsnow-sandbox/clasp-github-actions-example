@@ -1,5 +1,5 @@
-const greeter = (person: string) => {
-  return `Hello, ${person}!!`;
+export const greeter = (person: string): string => {
+  return `Hello, ${person}!`;
 };
 
 function testGreeter() {
