@@ -28,7 +28,12 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Setup ~/.clasprc.json
+      - name: set output
+        id: set
+        run: |
+          echo ::set-output name=json_var::'[{ "name": "test", "client_payload": "111" }, { "name": "test2", "client_payload": "222" }] '
+
+      - name: Create ~/.clasprc.json
         env:
           CLASPRC_ACCESS_TOKEN: ${{ secrets.CLASPRC_ACCESS_TOKEN }}
           CLASPRC_CLIENT_ID: ${{ secrets.CLASPRC_CLIENT_ID }}
@@ -38,34 +43,34 @@ jobs:
           CLASPRC_REFRESH_TOKEN: ${{ secrets.CLASPRC_REFRESH_TOKEN }}
         run: |
           echo $(cat <<-EOS
-{
-  "token": {
-    "access_token": "$CLASPRC_SCRIPT_ID",
-    "scope": "https://www.googleapis.com/auth/script.deployments https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.file openid https://www.googleapis.com/auth/service.management https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/logging.read https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/script.webapp.deploy",
-    "token_type": "Bearer",
-    "id_token": "$CLASPRC_ID_TOKEN",
-    "expiry_date": $CLASPRC_EXPIRY_DATE,
-    "refresh_token": "$CLASPRC_REFRESH_TOKEN"
-  },
-  "oauth2ClientSettings": {
-    "clientId": "$CLASPRC_CLIENT_ID",
-    "clientSecret": "$CLASPRC_CLIENT_SECRET",
-    "redirectUri": "http://localhost"
-  },
-  "isLocalCreds": false
-}
-EOS
+          {
+            "token": {
+              "access_token": "$CLASPRC_SCRIPT_ID",
+              "scope": "https://www.googleapis.com/auth/script.deployments https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.file openid https://www.googleapis.com/auth/service.management https://www.googleapis.com/auth/script.projects https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/logging.read https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/script.webapp.deploy",
+              "token_type": "Bearer",
+              "id_token": "$CLASPRC_ID_TOKEN",
+              "expiry_date": $CLASPRC_EXPIRY_DATE,
+              "refresh_token": "$CLASPRC_REFRESH_TOKEN"
+            },
+            "oauth2ClientSettings": {
+              "clientId": "$CLASPRC_CLIENT_ID",
+              "clientSecret": "$CLASPRC_CLIENT_SECRET",
+              "redirectUri": "http://localhost"
+            },
+            "isLocalCreds": false
+          }
+          EOS
           ) > ~/.clasprc.json
 
-      - name: Setup .clasp.json
+      - name: Create .clasp.json
         env:
           CLASP_SCRIPT_ID: ${{ secrets.CLASP_SCRIPT_ID }}
         run: |
           echo $(cat <<-EOS
-{
-  "scriptId": $CLASP_SCRIPT_ID
-}
-EOS
+          {
+            "scriptId": $CLASP_SCRIPT_ID
+          }
+          EOS
           ) > .clasp.json
 
       - name: Get version
