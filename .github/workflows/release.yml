@@ -38,7 +38,7 @@ jobs:
           CLASPRC_REFRESH_TOKEN: ${{ secrets.CLASPRC_REFRESH_TOKEN }}
           CLASP_SCRIPT_ID: ${{ secrets.CLASP_SCRIPT_ID }}
         run: |
-          echo $(cat << EOS
+          echo $(cat <<-EOS
           {
             "token": {
               "access_token": "${CLASPRC_SCRIPT_ID}",
