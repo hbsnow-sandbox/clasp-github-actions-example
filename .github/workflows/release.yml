@@ -30,8 +30,8 @@ jobs:
 
       - name: Setup secrets
         env:
-          CLASPRC: ${{ secrets.CLASPRC }}
-          CLASP: ${{ secrets.CLASP }}
+          CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+          CLASP_JSON: ${{ secrets.CLASP_JSON }}
         run: |
           echo ${CLASPRC_JSON} > ~/.clasprc.json
           echo ${CLASP_JSON} > ./.clasp.json
