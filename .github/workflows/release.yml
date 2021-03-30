@@ -17,15 +17,8 @@ jobs:
       CLASPRC_ID_TOKEN: ${{ secrets.CLASPRC_ID_TOKEN }}
       CLASPRC_REFRESH_TOKEN: ${{ secrets.CLASPRC_REFRESH_TOKEN }}
       CLASP_SCRIPT_ID: ${{ secrets.CLASP_SCRIPT_ID }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      HOGE: "hoge"
 
     steps:
-      - name: Use secret variable
-        run: |
-          echo ${GITHUB_TOKEN}
-          echo ${HOGE}
-
       - uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2-beta
