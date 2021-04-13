@@ -3,6 +3,6 @@ export const greeter = (person: string): string => {
 };
 
 function testGreeter() {
-  const user = "Grant";
+  const user = "hbsnow";
   Logger.log(greeter(user));
 }
